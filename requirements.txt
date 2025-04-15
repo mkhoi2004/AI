@@ -1,0 +1,12 @@
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+category_encoders
+shap
+catboost
+optuna
+joblib
+ipykernel
+optuna-integration[sklearn]
