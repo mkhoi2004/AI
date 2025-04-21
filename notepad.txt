@@ -1,6 +1,0 @@
-Battery Capacity (kWh) | Charging Duration (hours) | Charging Rate (kW) | Energy Consumed (kWh)
-108.46 | 0.59 | 36.39 | 60.71
-100.00 | 3.13 | 30.68 | 12.34
-75.00 | 2.45 | 27.51 | 19.13
-50.00 | 1.27 | 32.88 | 79.46
-50.00 | 2.02 | 10.22 | 19.63

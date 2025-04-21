@@ -6,6 +6,9 @@ from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import classification_report, confusion_matrix
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Đọc dữ liệu
 df = pd.read_csv('ev_charging_patterns.csv')
@@ -45,7 +48,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 # Tạo các bước tiền xử lý cho cột phân loại và số
 preprocessor = ColumnTransformer(
-    transformers=[
+    transformers=[ 
         ('num', Pipeline(steps=[
             ('imputer', SimpleImputer(strategy='mean')),  # Điền giá trị thiếu bằng giá trị trung bình
             ('scaler', StandardScaler())  # Chuẩn hóa dữ liệu số
@@ -69,6 +72,7 @@ model_pipeline.fit(X_train, y_train)
 # Đánh giá mô hình
 accuracy = model_pipeline.score(X_test, y_test)
 print(f'Accuracy: {accuracy}')
+
 # Lấy đối tượng mô hình CatBoost từ pipeline
 catboost_model = model_pipeline.named_steps['classifier']
 
@@ -80,9 +84,30 @@ print("Mô hình CatBoost đã được lưu thành công.")
 # Dự đoán trên tập kiểm tra
 y_pred = model_pipeline.predict(X_test)
 
-from sklearn.metrics import classification_report
 # Đánh giá mô hình bằng các chỉ số như accuracy, precision, recall, f1-score
 print(classification_report(y_test, y_pred))
+
+# Thêm ma trận nhầm lẫn (Confusion Matrix)
+cm = confusion_matrix(y_test, y_pred)
+print("Confusion Matrix:")
+print(cm)
+
+# Vẽ ma trận nhầm lẫn với các chú thích
+plt.figure(figsize=(7, 5))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=model_pipeline.classes_, yticklabels=model_pipeline.classes_)
+
+# Thêm tiêu đề và nhãn cho các trục
+plt.title('Confusion Matrix with Annotations')
+plt.xlabel('Predicted Labels')
+plt.ylabel('True Labels')
+
+# Thêm các chú thích trực quan vào ma trận
+for i in range(len(cm)):
+    for j in range(len(cm[i])):
+        plt.text(j, i, f'{cm[i][j]}', ha='center', va='center', color='black')
+
+# Hiển thị ma trận nhầm lẫn
+plt.show()
 
 # Thống kê phân bố User Type
 print(df['User Type'].value_counts())
