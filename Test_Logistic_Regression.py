@@ -1,7 +1,5 @@
-import pandas as pd
 import joblib
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
+
 
 # Bước 1: Tải mô hình đã huấn luyện và scaler
 model = joblib.load('logistic_regression_model.pkl')

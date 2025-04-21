@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, classification_report
-import joblib  # Thư viện để lưu mô hình
+import joblib  
 
 # Bước 1: Đọc và xử lý dữ liệu
 df_uploaded_check = pd.read_csv('final_cleaned_ev_charging_patterns_no_station.csv')
